@@ -300,13 +300,24 @@ Respuesta:
 
 
 ## 7. Conclusión
-Este laboratorio permitió practicar el análisis de tráfico de red en un escenario de compromiso realista, reforzando habilidades en:
-- Network Forensics
-- Identificación de actividad maliciosa en PCAPs
-- Uso de Wireshark para investigación de incidentes
-- Reconstrucción de la cadena de ataque desde el tráfico de red
 
-## 8. Qué aprendí / qué mejoré
-- Mejora en el uso de filtros y análisis de flujos en Wireshark.
-- Mayor facilidad para identificar patrones de tráfico malicioso.
-- Mejor comprensión de cómo se ve un ataque real a nivel de red.
+Este laboratorio representa un escenario realista de **compromiso de un servidor web mediante la subida de una web shell**, seguido de **ejecución remota de comandos, establecimiento de un reverse shell y acceso a información sensible**.
+
+A través del análisis del PCAP fue posible reconstruir toda la cadena del ataque:
+
+1. El atacante inicia conexión HTTP contra el servidor web.
+2. Se explota una funcionalidad vulnerable de subida de archivos para cargar una web shell (`image.jpg.php`).
+3. El atacante accede al archivo subido y ejecuta código en el servidor.
+4. Se establece una conexión saliente tipo **reverse shell** hacia el atacante por el puerto 8080.
+5. A través de esa sesión interactiva, el atacante ejecuta comandos y accede a información sensible, como el archivo `/etc/passwd`, indicando un intento de **exfiltración de datos**.
+
+Desde el punto de vista defensivo, este laboratorio permitió practicar y reforzar habilidades clave de **Network Forensics e Incident Response**, incluyendo:
+
+- Análisis de tráfico de red en archivos PCAP.
+- Uso de Wireshark para identificar flujos sospechosos y seguir sesiones completas (HTTP y TCP streams).
+- Detección de actividad maliciosa, como subidas de archivos no autorizadas, ejecución remota de comandos y comunicaciones tipo C2 / reverse shell.
+- Correlación de eventos para reconstruir una línea temporal del ataque a partir del tráfico de red.
+- Identificación del impacto del incidente mediante el análisis de acciones realizadas por el atacante tras la intrusión.
+
+En conjunto, este ejercicio refuerza la importancia de la **monitorización del tráfico de red**, la **validación de funcionalidades de subida de archivos en aplicaciones web** y la capacidad de un analista Blue Team para **detectar, investigar y comprender un compromiso real** basándose únicamente en evidencias de red.
+

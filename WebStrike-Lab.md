@@ -114,7 +114,7 @@ Resultados relevantes:
 Respuesta:
 - **Tianjin**
 
-(En el repositorio se pueden adjuntar capturas de pantalla de las consultas externas si se desea.)
+![Buscar Origen Geográfico IP](images/webstrike/ip2location.png)
 
 ---
 

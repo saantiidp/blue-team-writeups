@@ -21,11 +21,20 @@ El objetivo es identificar cómo ocurrió la intrusión y qué tipo de actividad
 4. Análisis de posibles cargas maliciosas y comunicaciones externas.
 5. Correlación de eventos para reconstruir la línea temporal del ataque.
 
-## 5. Hallazgos principales
-- Se identificó tráfico HTTP sospechoso relacionado con la subida de un archivo malicioso.
-- Se observó comunicación posterior entre el servidor comprometido y una IP externa, consistente con un reverse shell o canal C2.
-- Se detectaron transferencias de datos que indican posible exfiltración de información.
-- El patrón de tráfico sugiere una secuencia de: acceso inicial → ejecución → comunicación remota → exfiltración.
+## 5. Análisis paso a paso
+
+### 5.1 Vista general del PCAP
+
+Se comenzó con una revisión general del archivo PCAP utilizando las estadísticas de Wireshark para identificar protocolos y flujos de tráfico más relevantes.  
+Se observó una cantidad significativa de tráfico HTTP, lo cual es coherente con un posible ataque contra un servidor web.
+
+![Vista general del tráfico](images/webstrike/overview.png)
+
+### 5.2 Análisis de tráfico HTTP
+
+Se aplicó el siguiente filtro de visualización para centrarse en tráfico web:
+
+
 
 ## 6. Conclusión
 Este laboratorio permitió practicar el análisis de tráfico de red en un escenario de compromiso realista, reforzando habilidades en:

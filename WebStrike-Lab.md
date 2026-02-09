@@ -134,7 +134,7 @@ En el stream se observa el campo `User-Agent`:
 Respuesta:
 - **Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0**
 
-Captura recomendada:
+Captura:
 - HTTP Stream mostrando el User-Agent:
   ![User-Agent en HTTP Stream](images/webstrike/07-user-agent.png)
 

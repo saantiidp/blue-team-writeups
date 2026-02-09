@@ -90,11 +90,6 @@ Además, se observa el patrón típico de una sesión web:
 - Handshake TCP (SYN/SYN-ACK/ACK)
 - Peticiones HTTP (GET/POST)
 - ACKs intercalados propios del flujo TCP
-
-Captura:
-- Flujo TCP/HTTP inicial:
-  ![Flujo inicial](images/webstrike/06-initial-flow.png)
-
 ---
 
 ## 6. Preguntas del laboratorio (con evidencias)

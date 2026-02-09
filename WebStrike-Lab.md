@@ -171,22 +171,42 @@ Captura recomendada:
 
 ### 6.4 Pregunta 4: Directorio usado por la web para almacenar archivos subidos
 
-Para identificar el directorio donde se almacenan los archivos subidos, se puede seguir esta metodología:
+Para identificar el directorio donde la aplicación web almacena los archivos subidos, se sigue la recomendación del propio laboratorio:
 
-1) Revisar la respuesta del endpoint de subida (`/reviews/upload.php`):
-- En ocasiones el servidor devuelve en el cuerpo o cabeceras una ruta, un enlace o un nombre de directorio (por ejemplo `uploads/`, `files/`, `images/`, etc.).
-- Buscar en el HTTP stream palabras clave como:
-  - `upload`
-  - `uploads`
-  - `file`
-  - `path`
-  - `Location:`
+> Apply the filter `http.request.uri contains "<Uploaded_Filename>"` and analyze the packet's HTTP URI to locate the upload directory.
 
-2) Buscar peticiones posteriores al upload:
-- Muchas veces, tras subir un archivo, el atacante intenta acceder a él con un `GET` para ejecutarlo (por ejemplo `GET /<directorio>/<archivo>`).
-- Filtrar por el nombre del archivo subido y ver la URL completa:
+Dado que en la pregunta anterior se identificó que el archivo subido es:
 
-Filtros útiles:
+- `image.jpg.php`
+
+Se aplica el siguiente filtro en Wireshark:
+http.request.uri contains "image.jpg.php"
+
+Este filtro permite localizar cualquier petición HTTP que intente acceder directamente al archivo subido.
+
+Al aplicar el filtro, se observa una petición **GET** realizada por el atacante con la siguiente URI:
+
+GET /reviews/uploads/image.jpg.php HTTP/1.1
+
+
+Esto indica que, tras subir el archivo malicioso, el atacante intenta acceder a él directamente para ejecutarlo.
+
+Captura:
+- Petición GET al archivo subido:
+  ![Acceso al archivo subido](images/webstrike/09-get-uploaded-file.png)
+
+Además, al seguir el **HTTP Stream** de ese paquete, se confirma la ruta completa utilizada por la aplicación web:
+
+/reviews/uploads/image.jpg.php
+
+
+Lo que demuestra que la aplicación guarda los archivos subidos en el directorio:
+
+/reviews/uploads/
+
+
+Respuesta:
+- **/reviews/uploads/**
 
 
 

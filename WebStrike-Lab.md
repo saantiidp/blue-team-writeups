@@ -255,6 +255,48 @@ Respuesta:
 
 8080
 
+### 6.6 Pregunta 6: Archivo que el atacante intentó exfiltrar
+
+El objetivo de esta pregunta es identificar qué información sensible intentó obtener el atacante tras comprometer el servidor.
+
+Según las pistas del laboratorio, la exfiltración debe buscarse en el tráfico saliente asociado al puerto utilizado por el reverse shell, previamente identificado como **8080**.
+
+#### 6.6.1 Filtrado del tráfico saliente
+
+Se aplica el siguiente filtro en Wireshark:
+
+tcp.dstport == 8080
+
+
+Este filtro muestra el tráfico dirigido al puerto 8080 en la máquina del atacante, es decir, la sesión interactiva establecida tras la ejecución del web shell.
+
+#### 6.6.2 Análisis del TCP Stream
+
+Se selecciona uno de los paquetes resultantes y se sigue el flujo completo:
+
+- Click derecho → **Follow** → **TCP Stream**
+
+En el contenido del stream se observa una sesión de shell interactiva en la que el atacante ejecuta varios comandos, entre ellos:
+
+whoami
+uname -a
+pwd
+ls /home
+cat /etc/passwd
+
+
+El comando:
+
+cat /etc/passwd
+
+muestra claramente que el atacante está accediendo al archivo **/etc/passwd**, que contiene información sobre las cuentas del sistema, lo que constituye un claro intento de acceso y posible exfiltración de datos sensibles.
+
+Captura recomendada:
+- TCP Stream mostrando el comando `cat /etc/passwd` y su salida:
+  ![Exfiltración de /etc/passwd](images/webstrike/11-exfiltration-passwd.png)
+
+Respuesta:
+- **passwd**
 
 
 ## 7. Conclusión

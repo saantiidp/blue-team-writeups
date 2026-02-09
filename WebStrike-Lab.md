@@ -21,14 +21,14 @@ El objetivo es identificar cómo ocurrió la intrusión y qué tipo de actividad
 4. Análisis de posibles cargas maliciosas y comunicaciones externas.
 5. Correlación de eventos para reconstruir la línea temporal del ataque.
 
-## 5. Análisis paso a paso
+### 5.1 Inicio del laboratorio y material proporcionado
 
-### 5.1 Vista general del PCAP
+Este análisis corresponde al laboratorio **WebStrike** de CyberDefenders, disponible en:
+https://cyberdefenders.org/blueteam-ctf-challenges/webstrike/
 
-Se comenzó con una revisión general del archivo PCAP utilizando las estadísticas de Wireshark para identificar protocolos y flujos de tráfico más relevantes.  
-Se observó una cantidad significativa de tráfico HTTP, lo cual es coherente con un posible ataque contra un servidor web.
+El laboratorio proporciona un escenario de investigación basado en un archivo **PCAP**, con el objetivo de analizar tráfico de red y determinar si hubo compromiso de un servidor web, identificando las fases del ataque (intrusión, ejecución, comunicación remota y posible exfiltración).
 
-![Vista general del tráfico](images/webstrike/overview.png)
+A partir de este punto, el análisis se realiza con **Wireshark**, documentando filtros aplicados, hallazgos relevantes y evidencias observadas en el tráfico.
 
 ### 5.2 Análisis de tráfico HTTP
 

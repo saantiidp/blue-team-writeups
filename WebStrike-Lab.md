@@ -242,6 +242,19 @@ Es decir, el servidor comprometido intenta abrir una conexión saliente hacia la
 Captura
 - HTTP Stream mostrando el payload del web shell:
   ![HTTP STREAM](images/webstrike/10-http-stream-payload.png)
+  
+6.5.2 Confirmación en el tráfico de red
+
+Además del payload, en el PCAP se observan conexiones TCP posteriores desde el servidor hacia el atacante usando el puerto 8080, lo que confirma que la comunicación efectivamente se intenta establecer por ese puerto.
+
+Esto refuerza que:
+
+El puerto objetivo del atacante para recibir la conexión del reverse shell es 8080.
+
+Respuesta:
+
+8080
+
 
 
 ## 7. Conclusión

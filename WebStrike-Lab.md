@@ -239,7 +239,7 @@ Puerto del atacante: 8080
 
 Es decir, el servidor comprometido intenta abrir una conexión saliente hacia la máquina del atacante en el puerto 8080.
 
-Captura
+Captura:
 - HTTP Stream mostrando el payload del web shell:
   ![HTTP STREAM](images/webstrike/10-http-stream-payload.png)
   
@@ -291,7 +291,7 @@ cat /etc/passwd
 
 muestra claramente que el atacante está accediendo al archivo **/etc/passwd**, que contiene información sobre las cuentas del sistema, lo que constituye un claro intento de acceso y posible exfiltración de datos sensibles.
 
-Captura recomendada:
+Captura:
 - TCP Stream mostrando el comando `cat /etc/passwd` y su salida:
   ![Exfiltración de /etc/passwd](images/webstrike/11-exfiltration-passwd.png)
 

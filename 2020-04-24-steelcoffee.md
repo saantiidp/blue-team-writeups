@@ -43,15 +43,13 @@ Este laboratorio se realiza en un entorno de análisis de tráfico y tiene fines
    - Etc.
 
 Esto nos da una pista clara de que hay descargas sospechosas en el tráfico.
-
+![Abrir aletas](images/step_0.png)
 ---
 
 ## Apertura del PCAP en Wireshark
 
 - Abre Wireshark.
 - Ve a **File -> Open** y selecciona el archivo PCAP.
-
-![Abrir PCAP](images/step_1.png)
 
 ---
 
@@ -201,7 +199,7 @@ Ordenamos por **Content-Type** o revisamos los nombres y encontramos uno especia
 8888.png%3fuid=VwBpAG4AZABvAHcAcwAgAEQAZQBmAGUAbgBkAGUAcgAgAC0AIAA2ACwAMgAxACwAMAB8AE0AaQBjAHIAbwBzAG8AZgB0ACAAVwBpAG4AZABvAHcAcwAgADEAMAAgAFAAcgBvAA==
 ```
 
-![PNG sospechoso](images/step_15.png)
+![nombre](images/step_15.png)
 
 Este nombre es claramente sospechoso.
 
@@ -223,7 +221,6 @@ Este es un patrón típico en malware:
 - Usar nombres o descripciones que parecen componentes de Windows
 - Disfrazar un ejecutable malicioso como si fuera un archivo inofensivo (por ejemplo, una imagen .png)
 - Aumentar la probabilidad de que el usuario lo ejecute sin sospechar
-
 ![descifrado](images/step_16.png)
 ---
 
@@ -236,7 +233,7 @@ Resultados:
 - Troyano bancario
 - Backdoor
 - Dropper
-
+![virus](images/step_17.png)
 En la pestaña **Details** aparece:
 
 ```
@@ -255,7 +252,7 @@ Volviendo a **File -> Export Objects -> HTTP** y revisando el objeto sospechoso:
 
 - El archivo proviene de: **119.31.234.40**
 - El host que lo descarga es: **10.0.0.167**
-
+![origen](images/step_18.png)
 Por tanto, el cliente infectado es:
 - **10.0.0.167** (usuario: elmer.obrien)
 

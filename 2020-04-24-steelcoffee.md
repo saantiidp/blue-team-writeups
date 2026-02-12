@@ -43,7 +43,7 @@ Este laboratorio se realiza en un entorno de análisis de tráfico y tiene fines
    - Etc.
 
 Esto nos da una pista clara de que hay descargas sospechosas en el tráfico.
-![Abrir alertas](images/step_0.png)
+![Abrir alertas](images/steelcoffe/step_0.png)
 
 ---
 
@@ -60,11 +60,11 @@ Esto nos da una pista clara de que hay descargas sospechosas en el tráfico.
 
 1. Ve a **Statistics -> Protocol Hierarchy**.
 
-![Protocol Hierarchy - menú](images/step_2.png)
+![Protocol Hierarchy - menú](images/steelcoffe/step_2.png)
 
 2. Observa el resumen de tráfico del PCAP.
 
-![Protocol Hierarchy - resumen](images/step_3.png)
+![Protocol Hierarchy - resumen](images/steelcoffe/step_3.png)
 
 3. Datos relevantes:
 - Aproximadamente **10.5%** del tráfico es **UDP**.
@@ -91,7 +91,7 @@ Interpretación rápida:
 - **HTTPS (TLS)** indica tráfico cifrado, normalmente navegación web o descargas seguras.
 
 Con solo la jerarquía de protocolos ya tenemos una buena idea de lo que ocurre en la red.
-![Protocol Hierarchy - TCP](images/step_4.png)
+![Protocol Hierarchy - TCP](images/steelcoffe/step_4.png)
 
 ---
 
@@ -104,12 +104,12 @@ Kerberos es clave en entornos Windows con Active Directory: actúa como el “po
    kerberos
    ```
 
-![Filtro Kerberos](images/step_5.png)
+![Filtro Kerberos](images/steelcoffe/step_5.png)
 
 2. Observa los primeros paquetes Kerberos.
    - El **source 10.0.0.10** corresponde al **Domain Controller (SteelCoffee-DC)**, la pieza más crítica de la red.
 
-![Paquetes Kerberos](images/step_6.png)
+![Paquetes Kerberos](images/steelcoffe/step_6.png)
 
 ---
 
@@ -123,9 +123,9 @@ Kerberos es clave en entornos Windows con Active Directory: actúa como el “po
    ```
    Esto indica que **alyssa.fitzgerald** intenta autenticarse contra Kerberos y falla varias veces.
 
-![Alyssa Fitzgerald_AS-REQ](images/step_7.png)
-![Alyssa Fitzgerald_error](images/step_8.png)
-![Alyssa Fitzgerald](images/step_9.png)
+![Alyssa Fitzgerald_AS-REQ](images/steelcoffe/step_7.png)
+![Alyssa Fitzgerald_error](images/steelcoffe/step_8.png)
+![Alyssa Fitzgerald](images/steelcoffe/step_9.png)
 4. Más adelante, en el paquete **3998**, aparece otra solicitud:
    ```
    cNameString: elmer.obrien
@@ -134,7 +134,7 @@ Kerberos es clave en entornos Windows con Active Directory: actúa como el “po
    - En el paquete **4185** la autenticación es correcta y se emite el ticket.
    - La IP asociada es **10.0.0.167**.
 
-![Elmer Obrien](images/step_10.png)
+![Elmer Obrien](images/steelcoffe/step_10.png)
 
 ---
 
@@ -168,7 +168,7 @@ Ahora buscamos evidencias de **descarga de ficheros maliciosos**.
 Seleccionamos un stream TLS (por ejemplo el 3609) y hacemos:
 - **Follow -> TCP Stream**
 
-![Follow TCP Stream](images/step_11.png)
+![Follow TCP Stream](images/steelcoffe/step_11.png)
 
 En este stream se observan certificados y dominios legítimos como `www.bing.com`, por lo que seguimos buscando.
 
@@ -180,11 +180,11 @@ En este stream se observan certificados y dominios legítimos como `www.bing.com
 
 2. Aparece la lista de objetos transferidos.
 
-![Lista de objetos HTTP](images/step_12.png)
+![Lista de objetos HTTP](images/steelcoffe/step_12.png)
 
 3. Pulsa **Save All** y guarda los archivos en una carpeta.
 
-![Archivos exportados](images/step_13.png)
+![Archivos exportados](images/steelcoffe/step_13.png)
 
 En esa carpeta aparecen muchos ficheros reconstruidos a partir del tráfico de red: HTML, CSS, JS, imágenes, etc.
 
@@ -193,14 +193,14 @@ En esa carpeta aparecen muchos ficheros reconstruidos a partir del tráfico de r
 ### Paso 8: Buscar archivos sospechosos
 
 Sabemos por las alertas que hay un **Windows executable enviado como si fuera una imagen**.
-![alerta](images/step_14.png)
+![alerta](images/steelcoffe/step_14.png)
 Ordenamos por **Content-Type** o revisamos los nombres y encontramos uno especialmente raro:
 
 ```
 8888.png%3fuid=VwBpAG4AZABvAHcAcwAgAEQAZQBmAGUAbgBkAGUAcgAgAC0AIAA2ACwAMgAxACwAMAB8AE0AaQBjAHIAbwBzAG8AZgB0ACAAVwBpAG4AZABvAHcAcwAgADEAMAAgAFAAcgBvAA==
 ```
 
-![nombre](images/step_15.png)
+![nombre](images/steelcoffe/step_15.png)
 
 Este nombre es claramente sospechoso.
 
@@ -222,7 +222,7 @@ Este es un patrón típico en malware:
 - Usar nombres o descripciones que parecen componentes de Windows
 - Disfrazar un ejecutable malicioso como si fuera un archivo inofensivo (por ejemplo, una imagen .png)
 - Aumentar la probabilidad de que el usuario lo ejecute sin sospechar
-![descifrado](images/step_16.png)
+![descifrado](images/steelcoffe/step_16.png)
 ---
 
 ### Paso 10: Analizar el archivo en VirusTotal
@@ -234,7 +234,7 @@ Resultados:
 - Troyano bancario
 - Backdoor
 - Dropper
-![virus](images/step_17.png)
+![virus](images/steelcoffe/step_17.png)
 En la pestaña **Details** aparece:
 
 ```
@@ -253,7 +253,7 @@ Volviendo a **File -> Export Objects -> HTTP** y revisando el objeto sospechoso:
 
 - El archivo proviene de: **119.31.234.40**
 - El host que lo descarga es: **10.0.0.167**
-![origen](images/step_18.png)
+![origen](images/steelcoffe/step_18.png)
 Por tanto, el cliente infectado es:
 - **10.0.0.167** (usuario: elmer.obrien)
 

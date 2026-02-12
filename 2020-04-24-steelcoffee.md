@@ -43,7 +43,8 @@ Este laboratorio se realiza en un entorno de análisis de tráfico y tiene fines
    - Etc.
 
 Esto nos da una pista clara de que hay descargas sospechosas en el tráfico.
-![Abrir aletas](images/step_0.png)
+![Abrir alertas](images/step_0.png)
+
 ---
 
 ## Apertura del PCAP en Wireshark
